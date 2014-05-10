@@ -19,6 +19,9 @@ void IndexWrapper::createIndex(string path, indexItem itemType, int keyTopSize) 
 	case IndexWrapper::TITULO:
 		this->tittle = new HashSelection(indexPath + path);
 		break;
+	case IndexWrapper::FECHA:
+	this->fecha = new ClassifBPlusTree(indexPath + path,keyTopSize);
+	break;
 	default:
 		throw "Not an item handled";
 	}
@@ -44,6 +47,10 @@ void IndexWrapper::closeIndex(indexItem itemType) {
 		if(this->tittle != NULL)
 			delete this->tittle;
 		break;
+	case IndexWrapper::FECHA:
+		if (this->fecha != NULL)
+			delete this->fecha;
+		break;
 	default:
 		throw "Not an item handled";
 	}
@@ -61,6 +68,9 @@ bool IndexWrapper::add(Record* r, indexItem itemType) {
 		return this->words->insertRecord(r);
 	case IndexWrapper::TITULO:
 		return this->tittle->insertRecord(r);
+	case IndexWrapper::FECHA:
+		return this->fecha->add(r);
+		break;
 	default:
 		throw "Not an item handled";
 	}
@@ -78,6 +88,10 @@ bool IndexWrapper::remove(Record* r, indexItem itemType) {
 		return this->words->deleteRecord(r);
 	case IndexWrapper::TITULO:
 		return this->tittle->deleteRecord(r);
+	case IndexWrapper::FECHA:
+		return this->fecha->removeKey(*(r->getKey()), r->getData()->readAsInt(0));
+		break;
+
 	default:
 		throw "Not an item handled";
 	}
@@ -94,6 +108,9 @@ Record* IndexWrapper::search(Key* key, indexItem itemType) {
 		return this->words->findRecord(key);
 	case IndexWrapper::TITULO:
 		return this->tittle->findRecord(key);
+	case IndexWrapper::FECHA:
+			return this->fecha->search(*(key)).first;
+
 	default:
 		throw "Not an item handled";
 	}
@@ -109,6 +126,8 @@ list<int>* IndexWrapper::searchAllIds(Key* k, indexItem itemType){
 			return this->words->searchRecord(k);
 		case IndexWrapper::TITULO:
 			return this->tittle->searchRecord(k);
+		case IndexWrapper::FECHA:
+					return this->fecha->searchAllIds(*k);
 		default:
 			throw "Not an item handled";
 		}
@@ -123,6 +142,8 @@ IndexWrapper::~IndexWrapper(){
 		delete(this->tittle);
 	if(this->words != NULL)
 		delete(this->words);
+	if (this->fecha != NULL)
+		delete(this->fecha);
 
 }
 
@@ -162,6 +183,11 @@ bool IndexWrapper::removeFromAll(Book b){
 		}
 
 	}
+	if (this->fecha != NULL) {
+			r.setKey(new Key(b.getAuthor()));
+			if(!this->remove(&r, IndexWrapper::FECHA))
+				toReturn = false;
+		}
 	return toReturn;
 }
 

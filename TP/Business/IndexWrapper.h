@@ -27,7 +27,7 @@ public:
 	 * Enumerado para cada indice de los que estan contenidos
 	 * (despues habria que refactorizar a un facade)
 	 */
-	static enum indexItem {EDITORIAL = 0, AUTOR = 1, TITULO = 2, PALABRAS = 3} tIndexItem;
+	static enum indexItem {EDITORIAL = 0, AUTOR = 1, TITULO = 2, PALABRAS = 3, FECHA=4} tIndexItem;
 
 	/*
 	 * crea y guarda un indice del tipo especificado por el enumerado con el nombre especificado
@@ -85,6 +85,7 @@ private:
 	ClassifBPlusTree* editorial; // FIXME pide un facade a gritos
 	ClassifBPlusTree* author;
 	HashSelection* tittle;
+	ClassifBPlusTree* fecha;
 	HashClasification* words;
 	static IndexWrapper* instance;
 
