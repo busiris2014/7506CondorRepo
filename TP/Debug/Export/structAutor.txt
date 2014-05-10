@@ -1,0 +1,19 @@
+--------- Arbol B+ ---------
+
+Tamanio Total Nodo:  512
+Tamanio Datos Control Nodo:  8
+Tamanio Efectivo Nodo:  504
+Tamanio Datos Control Registro:  5
+
+Primera Hoja:  0
+Nodos Libres:  
+
+  Numero: 0  Nivel: 0  Cant.Elem: 4  Esp.Libre: 424  Hoja.Sig: 0
+          (bacultural;2)19
+          13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+          (briprov;3)16
+          27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 
+          (telamrss;1)17
+          1 2 3 4 5 6 7 8 9 10 11 12 
+          (turss;4)14
+          48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 
